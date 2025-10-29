@@ -1,0 +1,107 @@
+/* Colores y fuentes base */
+:root {
+    --primary-color: #007bff; /* Color azul primario de Bootstrap */
+    --secondary-color: #6c757d;
+    /* Eliminamos el degradado de fondo que teníamos */
+    --card-bg: #ffffff;
+    --text-dark: #343a40;
+    --text-secondary: #6c757d;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    color: var(--text-dark);
+    
+    /* 🔴 CAMBIO CLAVE: IMAGEN DE FONDO */
+    background-image: url('../img/Foto Juana Manso 999.jpg'); /* Ruta relativa a css/login-style.css */
+    background-size: cover; /* Cubre todo el fondo */
+    background-position: center center; /* Centra la imagen */
+    background-repeat: no-repeat; /* Evita que se repita */
+    background-attachment: fixed; /* La imagen se fija al viewport */
+
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.login-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px; 
+}
+
+/* Estilo de la tarjeta de login */
+.login-card {
+    max-width: 420px; 
+    width: 100%;
+    background-color: rgba(255, 255, 255, .6); /* Fondo blanco semitransparente para que la imagen se vea un poco */
+    border-radius: 15px; 
+    border: none;
+    /* 🔴 CAMBIO CLAVE: Sombra más pronunciada y elegante */
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3); 
+    animation: fadeIn 0.8s ease-out; 
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.card-title {
+    color: var(--text-dark);
+    font-size: 2rem; 
+}
+
+.text-secondary {
+    color: var(--text-secondary) !important;
+    font-size: 0.95rem;
+}
+
+/* Estilos para los campos de formulario flotantes */
+.form-floating .form-control {
+    border-radius: 8px; 
+    height: calc(3.5rem + 2px); 
+    padding: 1rem 0.75rem;
+    padding-top: 1.625rem;
+    border: 1px solid #ced4da;
+    transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.form-floating .form-control:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25); 
+}
+
+.form-floating > label {
+    padding: 1rem 0.75rem;
+    color: var(--secondary-color);
+    transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
+}
+
+/* Botón de login */
+.login-btn {
+    border-radius: 8px; 
+    font-size: 1.15rem; 
+    padding: 0.75rem 1.5rem;
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.login-btn:hover {
+    background-color: #0056b3; 
+    border-color: #0056b3;
+    transform: translateY(-2px); 
+    box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3);
+}
+
+.alert-danger {
+    border-radius: 8px;
+    font-size: 0.9rem;
+    padding: 0.8rem 1rem;
+}

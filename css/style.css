@@ -1,0 +1,57 @@
+
+
+/* Estilos generales para tótem */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f9fa; 
+}
+
+/* Contenedor de las tarjetas - Forzamos 2 columnas en cualquier pantalla grande/tótem */
+.row-cols-lg-2 {
+    --bs-gutter-x: 1.5rem; 
+    --bs-gutter-y: 1.5rem; 
+}
+
+/* Sombra y esquinas redondeadas en las tarjetas */
+.card-empresa {
+    border: 1px solid #e0e0e0;
+    border-radius: 15px; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    /* 🔴 CORRECCIÓN CLAVE: Altura Fija y Definida para CADA tarjeta */
+    height: 140px; 
+    overflow: hidden;
+}
+
+/* 🔴 CORRECCIÓN: Estilo para la columna del número (Fondo BLANCO/CLARO, sin colores de estado) */
+.col-numero {
+    background-color: #e9ecef; /* Un gris muy claro de Bootstrap (o #ffffff para blanco puro) */
+    color: #343a40; /* Color de texto oscuro para el contraste */
+    /* Aseguramos que el texto oscuro se aplique al fondo amarillo si lo usáramos, pero aquí es gris */
+}
+
+/* El número de cocheras */
+.cocheras-numero {
+    font-size: 4rem; 
+    line-height: 1; 
+}
+
+/* Ajuste para la imagen del logo dentro de la tarjeta */
+.logo-totem {
+    /* 🔴 CORRECCIÓN CLAVE: Altura Máxima Estricta para que el logo no dicte el tamaño */
+    max-height: 80px; 
+    width: auto;
+    object-fit: contain;
+}
+
+/* Quitar margen inferior del encabezado para un diseño más denso */
+header {
+    margin-bottom: 0.5rem !important; 
+}
+
+/* Contenedor de las tarjetas - AHORA SOLO PARA XXL (1400px+) */
+@media (min-width: 1400px) { /* Para pantallas extra-extra-grandes (xxl) y superiores */
+    /* Asegura 2 tarjetas por fila solo en la resolución más alta */
+    .row-cols-xxl-2 {
+        --bs-columns: 2; 
+    }
+}

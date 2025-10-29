@@ -1,0 +1,122 @@
+:root {
+    --sidebar-width: 240px; 
+    --primary-color: #007bff;
+    --secondary-bg: #f8f9fa; 
+    --menu-bg: #ffffff;
+}
+
+body {
+    overflow-x: hidden;
+    background-color: var(--secondary-bg);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#wrapper {
+    display: flex;
+}
+
+/* Estilos de la Barra Lateral */
+.sidebar-wrapper {
+    min-height: 100vh;
+    width: var(--sidebar-width);
+    position: fixed; 
+    left: 0; 
+    transition: all 0.25s ease-out;
+    z-index: 1000; 
+    background-color: var(--menu-bg) !important;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05); 
+}
+
+/* Estilos del Contenido de la Página */
+#page-content-wrapper {
+    width: 100%;
+    margin-left: var(--sidebar-width); 
+    transition: margin 0.25s ease-out;
+}
+
+/* BOTONES PLANOS Y ALINEADOS */
+.list-group-item-action {
+    color: #495057; 
+    border: none;
+    background-color: transparent !important; 
+    transition: all 0.2s ease;
+    font-weight: 500;
+    margin: 0 !important; 
+    border-radius: 0 !important; 
+    padding: 15px 20px !important; 
+    box-shadow: none !important; 
+}
+
+.list-group-item-action:hover {
+    background-color: var(--secondary-bg) !important; 
+    color: var(--primary-color);
+    box-shadow: none !important; 
+    transform: none !important; 
+}
+
+.list-group-item-action.active-link, 
+.list-group-item-action.active-link:hover {
+    background-color: var(--secondary-bg) !important; 
+    color: var(--primary-color) !important; 
+    box-shadow: none !important;
+    transform: none;
+    border-left: 5px solid var(--primary-color) !important; 
+    padding-left: 15px !important; 
+}
+
+/* Estilo del Logo/Desarrollador */
+.sidebar-heading {
+    border-bottom: 1px solid #e9ecef !important;
+}
+
+/* Enlace de Cerrar Sesión */
+.logout-link {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    border-top: 1px solid #e9ecef;
+    background-color: #f1f1f1 !important;
+    color: #dc3545 !important; 
+    border-radius: 0 !important;
+}
+
+/* Media Queries (se mantiene la lógica de toggle) */
+@media (max-width: 768px) {
+    .sidebar-wrapper {
+        margin-left: calc(0px - var(--sidebar-width)); 
+    }
+    #page-content-wrapper {
+        margin-left: 0;
+    }
+}
+
+/* ------------------------------------------- */
+/* ESTILOS DE FORMULARIO PARA LA GESTIÓN (PAGINA Y MODAL) */
+/* ------------------------------------------- */
+
+/* Limitar el ancho de los campos del formulario para que se vea proporcionado en el contenido principal */
+#main-content-area #addCompanyForm .mb-3,
+#main-content-area #addCompanyForm .mb-4 {
+    max-width: 450px; 
+}
+
+/* Limitar el ancho de los campos del formulario dentro del modal (Aunque el modal ya tiene ancho limitado) */
+#addCompanyModal .modal-form-control {
+    max-width: 450px; /* Esto es redundante en el modal, pero asegura uniformidad si se cambia el tamaño */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Estilos para la tabla */
+#companies-table-body img {
+    max-height: 40px;
+    width: auto;
+    object-fit: contain;
+}
+
+.btn-action-sm {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    border-radius: 0.2rem;
+}
