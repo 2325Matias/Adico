@@ -10,12 +10,18 @@
 </head>
 <body>
 
-    <header class="bg-dark text-white p-3 shadow-sm mb-4">
+    <header class="bg-dark text-white p-3 shadow-sm mb-4 position-relative">
         <div class="container-fluid"> 
             <h1 class="display-3 fw-bold text-center mb-0">Oficinas Dique III</h1>
             <h5 class="display-5 fw-bold text-center text-light mb-0">Disponibilidad de Cocheras</h5> 
         </div>
-    </header>
+        <a href="login.html" class="btn btn-warning position-absolute top-50 end-0 translate-middle-y me-3 d-none d-sm-block">
+            <i class="bi bi-key-fill me-2"></i> Acceso Admin
+        </a>
+        <a href="login.html" class="btn btn-warning position-absolute top-0 end-0 mt-2 me-2 d-block d-sm-none" style="padding: 0.5rem 0.75rem;">
+            <i class="bi bi-key-fill"></i>
+        </a>
+        </header>
 
     <main class="container-fluid">
         <div class="row row-cols-1 row-cols-xxl-2 g-3" id="empresas-container">
