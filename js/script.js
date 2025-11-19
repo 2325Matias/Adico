@@ -1,57 +1,76 @@
-// 1. Datos de las empresas (SIN CAMBIOS EN LOS DATOS)
-const empresas = [
-    // ... tus 10 objetos de empresa aquí ...
-    { nombre: "Bank of China", cocherasDisponibles: 6, imagen: "img/china.png" },
-    { nombre: "Cementos Avellaneda", cocherasDisponibles: 22, imagen: "img/cementos.png" },
-    { nombre: "Dell Technologies", cocherasDisponibles: 31, imagen: "img/dell.png" },
-    { nombre: "Draco Capital", cocherasDisponibles: 19, imagen: "img/draco.png" },
-    { nombre: "Oracle", cocherasDisponibles: 47, imagen: "img/oracle.png" },
-    { nombre: "Salesforce", cocherasDisponibles: 29, imagen: "img/sales.png" },
-    { nombre: "Santa Catalina", cocherasDisponibles: 28, imagen: "img/santa.png" },
-    { nombre: "Worley", cocherasDisponibles: 22, imagen: "img/worley.png" },
-    { nombre: "YPF Luz", cocherasDisponibles: 23, imagen: "img/luz.png" },
-    { nombre: "VMOS - Vaca Muerta Oil Sur", cocherasDisponibles: 17, imagen: "img/vmos.png" }
-];
+document.addEventListener('DOMContentLoaded', () => {
+    const container = document.getElementById('empresas-container');
+    const STORAGE_KEY = 'dique3_PRODUCCION'; // LA MISMA CLAVE QUE EL ADMIN
 
+    function renderTotem() {
+        const json = localStorage.getItem(STORAGE_KEY);
+        
+        if (!json) {
+            // Si no hay datos, mostramos mensaje de espera
+            container.innerHTML = '<div class="col-12 text-center"><h2 class="text-muted">Iniciando sistema...</h2></div>';
+            return;
+        }
+        
+        const data = JSON.parse(json); // { companies, spots, reports }
 
-// 2. Función para generar el HTML de una tarjeta horizontal (SIN COLORES DE ESTADO)
-function crearTarjetaEmpresa(empresa) {
-    // 🔴 CORRECCIÓN: Ya no se define badgeClass. El color de fondo es fijo en el CSS.
-    
-    return `
-        <div class="col">
-            <div class="card card-empresa">
-                <div class="row g-0 d-flex align-items-center h-100"> 
-                    <div class="col-6 d-flex align-items-center justify-content-center h-100 p-3">
-                        <img src="${empresa.imagen}" class="img-fluid logo-totem" alt="${empresa.nombre}">
-                    </div>
-                    
-                    <div class="col-6 p-0 h-100">
-                        <div class="h-100 w-100 col-numero d-flex align-items-center justify-content-center rounded-end-3">
-                            <div class="cocheras-numero fw-bold">
-                                ${empresa.cocherasDisponibles}
+        // --- CÁLCULO MATEMÁTICO CLAVE ---
+        const listado = data.companies.map(emp => {
+            // 1. ¿Cuántas cocheras son de esta empresa? (Capacidad Total)
+            const totalSpots = data.spots.filter(s => s.companyId === emp.id).length;
+            
+            // 2. ¿En cuántas de esas hay un auto estacionado? (Ocupados)
+            const occupiedSpots = data.spots.filter(s => s.companyId === emp.id && s.isOccupied).length;
+            
+            // 3. Disponibles = Total - Ocupados
+            let available = totalSpots - occupiedSpots;
+            if (available < 0) available = 0; // Seguridad
+
+            return {
+                ...emp,
+                displayNumber: available // ESTE ES EL NÚMERO QUE SE MUESTRA
+            };
+        });
+
+        // Ordenar: Las que tienen más lugar arriba
+        listado.sort((a, b) => b.displayNumber - a.displayNumber);
+
+        // Generar HTML
+        let html = '';
+        listado.forEach(emp => {
+            // (Opcional) Solo mostrar empresas que tienen al menos 1 cochera asignada
+            // Si quieres mostrar todas, borra la siguiente línea:
+            // if (data.spots.filter(s => s.companyId === emp.id).length === 0) return;
+
+            html += `
+                <div class="col">
+                    <div class="card card-empresa">
+                        <div class="row g-0 d-flex align-items-center h-100"> 
+                            <div class="col-6 d-flex align-items-center justify-content-center h-100 p-3">
+                                <img src="${emp.logo}" class="img-fluid logo-totem" alt="${emp.name}" onerror="this.src='img/default.png'">
+                            </div>
+                            <div class="col-6 p-0 h-100">
+                                <div class="h-100 w-100 col-numero d-flex align-items-center justify-content-center rounded-end-3 bg-light">
+                                    <div class="cocheras-numero fw-bold text-dark">
+                                        ${emp.displayNumber}
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    `;
-}
+            `;
+        });
 
-// 3. Renderizar y ordenar (el resto del código se mantiene igual)
-function renderizarEmpresas() {
-    const container = document.getElementById('empresas-container');
-    let htmlContent = '';
+        container.innerHTML = html;
+    }
+
+    renderTotem(); // Carga inicial
     
-    // Ordenar por cocheras disponibles (opcional)
-    empresas.sort((a, b) => b.cocherasDisponibles - a.cocherasDisponibles); 
-
-    empresas.forEach(empresa => {
-        htmlContent += crearTarjetaEmpresa(empresa);
+    // Actualizar automáticamente cuando el Admin haga cambios
+    window.addEventListener('storage', (e) => {
+        if (e.key === STORAGE_KEY) renderTotem();
     });
-
-    container.innerHTML = htmlContent;
-}
-
-document.addEventListener('DOMContentLoaded', renderizarEmpresas);
+    
+    // Refresco de seguridad cada 2 segundos
+    setInterval(renderTotem, 2000);
+});
